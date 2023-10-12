@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace Runner.Level.Buffs
+namespace Runner.Level.Behaviours.Character
 {
     [CreateAssetMenu(fileName = "DecelerateBuffConfig", menuName = "Runner/BuffConfigs/DecelerateBuff", order = 0)]
-    public class DecelerateBuffConfig : BuffConfig
+    public class DecelerateCharacterBehaviourConfig : CharacterBehaviourConfig
     {
         [Header("Speed decelerate multiplier")]
         [SerializeField] protected float _decelerateMultiplier;

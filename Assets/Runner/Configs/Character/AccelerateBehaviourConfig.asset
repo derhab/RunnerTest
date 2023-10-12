@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ab37fa6b082446ca40549bac2443fea, type: 3}
-  m_Name: DecelerateBuffConfig
+  m_Script: {fileID: 11500000, guid: bc34d104057c4726a20de573073418a1, type: 3}
+  m_Name: AccelerateBehaviourConfig
   m_EditorClassIdentifier: 
   effectDuration: 10
-  _viewRef: {fileID: 1000012970591572, guid: 7cafb89b5a0f61f479d0a748962abbbc, type: 3}
+  _viewRef: {fileID: 1000013846074356, guid: 11e31a2ebb4e6e246bcf8c0ba034a031, type: 3}
   _viewInteractableRadius: 0.5
-  _decelerateMultiplier: 0.5
+  _accelerateMultiplier: 2

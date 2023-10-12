@@ -6,29 +6,29 @@ using Runner.Level.Player;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Runner.Level.Buffs
+namespace Runner.Level.Behaviours.Character
 {
     /// <summary>
     /// Абстрактный класс эффекта накладываемого на персонажа
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class BuffObject<T> : IBuffObject where T : BuffConfig
+    public abstract class BaseCharacterBehaviour<T> : ICharacterBehaviour where T : CharacterBehaviourConfig
     {
+        public event Action EndEffect;
+        
         protected readonly T data;
+        
         protected ICharacter character;
         protected GameObject view;
         
-        public event Action EndEffect;
-        
         public GameObject View => view;
-        public BuffConfig Config => data;
-        
+        public CharacterBehaviourConfig Config => data;
         public bool IsApplied => _isApplied;
         
         private bool _isApplied;
         private CancellationTokenSource _cancelToken;
 
-        protected BuffObject(T data)
+        protected BaseCharacterBehaviour(T data)
         {
             this.data = data;
         }
@@ -45,10 +45,10 @@ namespace Runner.Level.Buffs
                 Object.Destroy(view);
         }
         
-        public virtual void ApplyBehaviourTo(ICharacter character)
+        public virtual void ApplyTo(ICharacter character)
         {
             this.character = character;
-            AddBuffToCharacter();
+            AddBehaviourTo();
 
             if (view != null)
             {
@@ -61,10 +61,11 @@ namespace Runner.Level.Buffs
                     });
             }
 
-            EnableTimer();
+            if (data.EffectDuration > 0)
+                EnableTimer();
         }
 
-        private async void EnableTimer()
+        protected async void EnableTimer()
         {
             _cancelToken?.Cancel();
             _cancelToken = new CancellationTokenSource();
@@ -74,21 +75,20 @@ namespace Runner.Level.Buffs
 
         public virtual void DisposeBehaviour()
         {
-            RemoveBuffFromCharacter();
-            character.RemoveBuff(this);
+            RemoveBehaviourFrom();
             EndEffect?.Invoke();
         }
 
-        private void RemoveBuffFromCharacter()
+        private void RemoveBehaviourFrom()
         {
             _isApplied = false;
-            character.RemoveBuff(this);
+            character.RemoveBehaviour(this);
         }
 
-        private void AddBuffToCharacter()
+        private void AddBehaviourTo()
         {
             _isApplied = true;
-            character.AddBuff(this);
+            character.AddBehaviour(this);
         }
         
         public void Dispose()

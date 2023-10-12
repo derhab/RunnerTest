@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Runner.Level.Buffs
+namespace Runner.Level.Behaviours.Character
 {
     [CreateAssetMenu(fileName = "FlyingBuffConfig", menuName = "Runner/BuffConfigs/FlyingBuff", order = 0)]
-    public class FlyingBuffConfig : BuffConfig
-    {
-
-    }
+    public class FlyingCharacterBehaviourConfig : CharacterBehaviourConfig { }
 }

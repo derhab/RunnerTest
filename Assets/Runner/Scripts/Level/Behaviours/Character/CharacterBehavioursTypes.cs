@@ -1,12 +1,13 @@
-﻿namespace Runner.Level.Buffs
+﻿namespace Runner.Level.Behaviours.Character
 {
     /// <summary>
     /// Типы накладываемых эффектов
     /// </summary>
-    public enum BuffTypes : byte
+    public enum CharacterBehavioursTypes : byte
     {
         Deceleration,
         Acceleration,
-        Flying
+        Flying,
+        Default
     }
 }

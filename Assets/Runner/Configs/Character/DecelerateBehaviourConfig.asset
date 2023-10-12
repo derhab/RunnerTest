@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3e2680b2fa44383b4c3f72b556d0c8a, type: 3}
-  m_Name: FlyingBuffConfig
+  m_Script: {fileID: 11500000, guid: 4ab37fa6b082446ca40549bac2443fea, type: 3}
+  m_Name: DecelerateBehaviourConfig
   m_EditorClassIdentifier: 
   effectDuration: 10
-  _viewRef: {fileID: 1000013317980782, guid: 2cf6690298568294cb6b655c0a3aeb87, type: 3}
+  _viewRef: {fileID: 1000012970591572, guid: 7cafb89b5a0f61f479d0a748962abbbc, type: 3}
   _viewInteractableRadius: 0.5
+  _decelerateMultiplier: 0.5

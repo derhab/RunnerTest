@@ -13,17 +13,18 @@ namespace Runner.Level
         private readonly LevelContextInstaller.LevelConfig _config;
         private readonly RuntimePrefabsFactory _prefabsFactory;
         private readonly UpdatablesManager _updatablesManager;
-        private readonly BuffsManager _buffsManager;
+        private readonly BehavioursManager _behavioursManager;
+        
         private ICharacter _player;
 
         public LevelInitializer(LevelContextInstaller.LevelConfig config, 
             UpdatablesManager updatablesManager,
-            BuffsManager buffsManager,
+            BehavioursManager behavioursManager,
             RuntimePrefabsFactory prefabsFactory)
         {
             _config = config;
             _updatablesManager = updatablesManager;
-            _buffsManager = buffsManager;
+            _behavioursManager = behavioursManager;
             _prefabsFactory = prefabsFactory;
         }
 
@@ -31,7 +32,7 @@ namespace Runner.Level
         {
             InitPlayer();
             InitPlatform();
-            InitBuffsManager();
+            InitBehavioursManager();
         }
 
         private void InitPlayer()
@@ -48,10 +49,10 @@ namespace Runner.Level
             _updatablesManager.Add(platform);
         }
         
-        private void InitBuffsManager()
+        private void InitBehavioursManager()
         {
-            _buffsManager.Initialze();
-            _updatablesManager.Add(_buffsManager);
+            _behavioursManager.Initialze();
+            _updatablesManager.Add(_behavioursManager);
         }
     }
 }

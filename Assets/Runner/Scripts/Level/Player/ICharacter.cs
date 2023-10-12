@@ -1,4 +1,5 @@
-﻿using Runner.Level.Buffs;
+﻿using System.Collections.Generic;
+using Runner.Level.Behaviours.Character;
 using UnityEngine;
 
 namespace Runner.Level.Player
@@ -13,24 +14,12 @@ namespace Runner.Level.Player
         Vector3 Position { get; }
 
         Animator GetAnimator();
-
-        void AddBuff(IBuffObject buff); 
         
-        void RemoveBuff(IBuffObject buff); 
+        List<ICharacterBehaviour> Behaviours { get; }
 
-        /// <summary>
-        /// Изменение скорости бега персонажа
-        /// </summary>
-        /// <param name="multiplier">коэффициент изменения скорости</param>
-        /// <param name="currentSpeed">значение скорости до изменения</param>
-        void ChangeRunSpeed(float multiplier, out float currentSpeed);
+        void AddBehaviour(ICharacterBehaviour behaviour); 
         
-        /// <summary>
-        /// Изменение скорости анимации модели персонажа
-        /// </summary>
-        /// <param name="multiplier">коэффициент изменения скорости</param>
-        /// <param name="currentSpeed">значение скорости до изменения</param>
-        void ChangeAnimationSpeed(float multiplier, out float currentSpeed);
+        void RemoveBehaviour(ICharacterBehaviour behaviour); 
         
         /// <summary>
         /// Установка скорости персонажа
@@ -43,5 +32,17 @@ namespace Runner.Level.Player
         /// </summary>
         /// <param name="value"></param>
         void SetAnimationSpeed(float value);
+        
+        /// <summary>
+        /// Получить скорость бега персонажа
+        /// </summary>
+        /// <returns></returns>
+        float GetRunSpeed();
+        
+        /// <summary>
+        /// Получить скорость воспроизведения анимации модели персонажа
+        /// </summary>
+        /// <returns></returns>
+        float GetAnimationSpeed();
     }
 }

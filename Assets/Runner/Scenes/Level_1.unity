@@ -627,9 +627,11 @@ MonoBehaviour:
         type: 3}
     _gameContainer: {fileID: 523074969}
     _platform: {fileID: 1498356769}
-    _buffSpawnDist: 25
-    _buffConfigs:
+    _behaviourViewSpawnDist: 25
+    _behavioursConfigs:
       _serializedList:
+      - Key: 3
+        Value: {fileID: 11400000, guid: 8ae14b3a94380a54999f6392d606d3a5, type: 2}
       - Key: 0
         Value: {fileID: 11400000, guid: 9b2ef8524c8701f48bc5712f0478a4a8, type: 2}
       - Key: 1

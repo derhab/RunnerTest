@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc34d104057c4726a20de573073418a1, type: 3}
-  m_Name: AccelerateBuffConfig
+  m_Script: {fileID: 11500000, guid: 96cb5bf326db4eb0a1ca50d589b1c6db, type: 3}
+  m_Name: DefaultCharacterBehaviourConfig
   m_EditorClassIdentifier: 
-  effectDuration: 10
-  _viewRef: {fileID: 1000013846074356, guid: 11e31a2ebb4e6e246bcf8c0ba034a031, type: 3}
-  _viewInteractableRadius: 0.5
-  _accelerateMultiplier: 2
+  effectDuration: 0
+  _viewRef: {fileID: 0}
+  _viewInteractableRadius: 0
+  _defaultRunSpeed: 3
+  _defaultAnimationSpeed: 1

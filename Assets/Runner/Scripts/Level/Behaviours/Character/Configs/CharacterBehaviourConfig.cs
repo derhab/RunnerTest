@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Runner.Level.Buffs
+namespace Runner.Level.Behaviours.Character
 {
     /// <summary>
     /// Конфиг объекта эффекта
     /// </summary>
-    public abstract class BuffConfig : ScriptableObject
+    public abstract class CharacterBehaviourConfig : ScriptableObject
     {
         [Header("Effect duration in seconds")]
         [SerializeField] 
@@ -13,11 +13,11 @@ namespace Runner.Level.Buffs
 
         [Header("Reference of view")]
         [SerializeField]
-        private GameObject _viewRef;
+        protected GameObject _viewRef;
         
         [Header("Interactable radius of view")]
         [SerializeField]
-        private float _viewInteractableRadius;
+        protected float _viewInteractableRadius;
         
         public int EffectDuration => effectDuration;
 

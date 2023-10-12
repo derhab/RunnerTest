@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Runner.Core;
-using Runner.Level.Buffs;
+using Runner.Level.Behaviours.Character;
 using UnityEngine;
 using Zenject;
 
@@ -15,23 +15,31 @@ namespace Runner.Level.Player
         public static readonly int Speed = Animator.StringToHash("speed");
         public static readonly int Flying = Animator.StringToHash("flying");
         
-        private const float _defaultSpeed = 3f;
         private const float _xOffsetMult = 20f;
         private const int _xMaxOffset = 3;
 
         [SerializeField] private Animator _animator;
         
         public Vector3 Position => transform.position;
-        public readonly List<IBuffObject> Buffs = new();
+        public List<ICharacterBehaviour> Behaviours { get; } = new();
 
         private float _speed;
         private ClientInput _clientInput;
-        private IBuffObject _currentBuff;
+        private LevelContextInstaller.LevelConfig _config;
+        private DefaultCharacterBehaviour _defaultBehaviour;
 
         [Inject]
-        private void Inject(ClientInput сlientInput)
+        private void Inject(ClientInput сlientInput, LevelContextInstaller.LevelConfig config)
         {
             _clientInput = сlientInput;
+            _config = config;
+        }
+        
+        public void Initialize()
+        {
+            _clientInput.MouseXDeltaChanged += OnMouseXDeltaChanged;
+            CreateDefaultBehaviour();
+            _defaultBehaviour.ApplyTo(this);
         }
 
         private void OnDestroy()
@@ -41,39 +49,40 @@ namespace Runner.Level.Player
 
         public Animator GetAnimator() => _animator;
         
-        public void AddBuff(IBuffObject buff)
+        public void SetRunSpeed(float value)
         {
-            if(!buff.IsApplied)
-                return;
-            Buffs.Add(buff);
-        }
-        
-        public void RemoveBuff(IBuffObject buff)
-        {
-            if(Buffs.Contains(buff))
-                Buffs.Remove(buff);
+            _animator.SetFloat(Speed, value);
+            _speed = value;
         }
 
-        public void SetRunSpeed(float value) => _speed = value;
         public void SetAnimationSpeed(float value) => _animator.speed = value;
+        
+        public float GetRunSpeed() => _speed;
 
-        public void ChangeRunSpeed(float multiplier, out float currentSpeed)
+        public float GetAnimationSpeed() => _animator.speed;
+        
+        public void AddBehaviour(ICharacterBehaviour behaviour)
         {
-            currentSpeed = _speed;
-            _speed *= multiplier;
-        }
+            if (!behaviour.IsApplied || behaviour is DefaultCharacterBehaviour) 
+                return;
 
-        public void ChangeAnimationSpeed(float multiplier, out float currentSpeed)
-        {
-            currentSpeed = _animator.speed;
-            _animator.speed *= multiplier;
+            _defaultBehaviour?.DisposeBehaviour();
+            Behaviours.Add(behaviour);
         }
         
-        public void Initialize()
+        public void RemoveBehaviour(ICharacterBehaviour behaviour)
         {
-            _clientInput.MouseXDeltaChanged += OnMouseXDeltaChanged;
-            SetRunSpeed(_defaultSpeed);
-            _animator.SetFloat(Speed, 1);
+            if(Behaviours.Contains(behaviour))
+                Behaviours.Remove(behaviour);
+            
+            if (Behaviours.Count == 0)
+                _defaultBehaviour.ApplyTo(this);
+        }
+
+        private void CreateDefaultBehaviour()
+        {
+            var config = _config.GetCharacterBehaviourConfig<DefaultCharacterBehaviourConfig>();
+            _defaultBehaviour = new DefaultCharacterBehaviour(config);
         }
 
         private void OnMouseXDeltaChanged(float delta)

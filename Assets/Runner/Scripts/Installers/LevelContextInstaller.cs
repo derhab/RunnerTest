@@ -4,10 +4,11 @@ using AYellowpaper;
 using AYellowpaper.SerializedCollections;
 using Runner.Core;
 using Runner.Level;
-using Runner.Level.Buffs;
+using Runner.Level.Behaviours.Character;
 using Runner.Level.Platform;
 using Runner.Level.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 /// <summary>
@@ -30,7 +31,7 @@ public class LevelContextInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<UpdatablesManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<ClientInput>().AsSingle();
         Container.BindInterfacesAndSelfTo<LevelInitializer>().AsSingle();
-        Container.BindInterfacesAndSelfTo<BuffsManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<BehavioursManager>().AsSingle();
 
         Container.BindInstance(_levelConfig).AsSingle();
     }
@@ -50,20 +51,23 @@ public class LevelContextInstaller : MonoInstaller
         [SerializeField] 
         private Platform _platform;
 
+        [FormerlySerializedAs("_buffSpawnDist")]
         [Space(10)]
         [Header("Дистанция на которой спавнится вью нового бафа")]
         [SerializeField] 
-        private int _buffSpawnDist;
+        private int _behaviourViewSpawnDist;
         
+        [FormerlySerializedAs("_buffConfigs")]
         [Space(5)]
-        [SerializeField] private SerializedDictionary<BuffTypes, BuffConfig> _buffConfigs;
+        [SerializeField] private SerializedDictionary<CharacterBehavioursTypes, CharacterBehaviourConfig> _behavioursConfigs;
 
         public MonoBehaviour Player => _playerRef.Value as MonoBehaviour;
         public Transform BaseViewContainer => _gameContainer;
         public Platform Platform => _platform;
         
-        public int GetBuffSpawnDist => _buffSpawnDist;
+        public int GetBehaviourSpawnDist => _behaviourViewSpawnDist;
         
-        public T GetConfig<T>() where T : BuffConfig => (T) _buffConfigs.Values.FirstOrDefault(x => x is T);
+        public T GetCharacterBehaviourConfig<T>() where T : CharacterBehaviourConfig
+            => (T) _behavioursConfigs.Values.FirstOrDefault(x => x is T);
     }
 }

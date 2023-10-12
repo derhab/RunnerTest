@@ -2,12 +2,12 @@
 using Runner.Level.Player;
 using UnityEngine;
 
-namespace Runner.Level.Buffs
+namespace Runner.Level.Behaviours.Character
 {
     /// <summary>
-    /// Интерфейс эффекта накладываемого на персонажа игрока
+    /// Интерфейс поведения, накладываемого на персонажа игрока
     /// </summary>
-    public interface IBuffObject : IDisposable
+    public interface ICharacterBehaviour : IDisposable
     {
         event Action EndEffect;
         
@@ -20,7 +20,7 @@ namespace Runner.Level.Buffs
 
         GameObject View { get; }
 
-        BuffConfig Config { get; }
+        CharacterBehaviourConfig Config { get; }
         
         /// <summary>
         /// Был ли эффект применен
@@ -36,6 +36,6 @@ namespace Runner.Level.Buffs
         /// Применить эффект
         /// </summary>
         /// <param name="character"></param>
-        void ApplyBehaviourTo(ICharacter character);
+        void ApplyTo(ICharacter character);
     }
 }
